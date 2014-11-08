@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 76050fb4f09f87d468e1d3f6be714613
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: UIFrame
+    21300002: UIFrame_L_lt
+    21300004: UIFrame_L_rt
+    21300006: UIFrame_L_ld
+    21300008: UIFrame_L_rd
+    21300010: UIFrame_T_l
+    21300012: UIFrame_T_r
+    21300014: UIFrame_T_u
+    21300016: UIFrame_T_d
+    21300018: UIFrame_LineH_t
+    21300020: UIFrame_LineH_t2
+    21300022: UIFrame_LineV_l
+    21300024: UIFrame_LineH_d
+    21300026: UIFrame_LineH_d2
+    21300028: UIFrame_LineH_m
+    21300030: UIFrame_LineV_m2
+    21300032: UIFrame_LineV_m3
+    21300034: UIFrame_LineV_r2
+    21300036: UIFrame_LineV_r
+    21300038: UIFrame_LineV_m
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 32
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: UIFrame_L_lt
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_L_ld
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_L_rt
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 36
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_L_rd
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_T_d
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 36
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_T_r
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_T_u
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 36
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_T_l
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 32
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineV_l
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 34
+        width: 32
+        height: 1
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineV_r
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 34
+        width: 32
+        height: 1
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineH_d
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 0
+        width: 1
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineH_t
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 36
+        width: 1
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineV_m
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 34
+        width: 32
+        height: 1
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UIFrame_LineH_m
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 0
+        width: 1
+        height: 32
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
