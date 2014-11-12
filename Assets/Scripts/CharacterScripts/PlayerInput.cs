@@ -47,11 +47,5 @@ public class PlayerInput : MonoBehaviour {
         //MousePosition;
         
 	}
-    void update()
-    {
-        if (networkView.isMine)
-        {
-            FixedUpdate();
-        }
-    }
+    
 }

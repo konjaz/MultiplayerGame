@@ -7,6 +7,12 @@ public class NetworkManager : MonoBehaviour
     private const string typeName = "TestGame";
     private const string gameName = "RoomName";
     private HostData[] hostList;
+    private float lastSynchronizationTime = 0f;
+    private float syncDelay = 0f;
+    private float syncTime = 0f;
+    private Vector3 syncStartPosition = Vector3.zero;
+    private Vector3 syncEndPosition = Vector3.zero;
+
     // Use this for initialization
     void Start()
     {
@@ -51,6 +57,7 @@ public class NetworkManager : MonoBehaviour
     void OnConnectedToServer()
     {
         Debug.Log("Server Joined");
+        SpawnPlayer();
     }
     void OnGUI()
     {
@@ -72,5 +79,5 @@ public class NetworkManager : MonoBehaviour
 
         }
     }
-
+    
 }

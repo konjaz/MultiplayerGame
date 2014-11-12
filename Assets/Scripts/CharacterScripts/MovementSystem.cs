@@ -13,6 +13,11 @@ public class MovementSystem : MonoBehaviour
     public float gravity = 10.0f;
     public float jumpHeight = 2.0f;
     public Transform CharacterSprite;
+    private float lastSynchronizationTime = 0f;
+    private float syncDelay = 0f;
+    private float syncTime = 0f;
+    private Vector3 syncStartPosition = Vector3.zero;
+    private Vector3 syncEndPosition = Vector3.zero;
     void Awake() {
         charRigidbody = rigidbody;
     }
@@ -96,5 +101,45 @@ public class MovementSystem : MonoBehaviour
         // From the jump height and gravity we deduce the upwards speed 
         // for the character to reach at the apex.
         return Mathf.Sqrt(2 * jumpHeight * gravity);
+    }
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        Vector3 syncPosition = Vector3.zero;
+        Vector3 syncVelocity = Vector3.zero;
+        if (stream.isWriting)
+        {
+            syncPosition = rigidbody.position;
+            stream.Serialize(ref syncPosition);
+
+            syncVelocity = rigidbody.velocity;
+            stream.Serialize(ref syncVelocity);
+        }
+        else
+        {
+            stream.Serialize(ref syncPosition);
+            stream.Serialize(ref syncVelocity);
+            syncTime = 0f;
+            syncDelay = Time.time - lastSynchronizationTime;
+            lastSynchronizationTime = Time.time;
+
+            syncStartPosition = rigidbody.position;
+            syncEndPosition = syncPosition + syncVelocity * syncDelay;
+        }
+    }
+    void Update()
+    {
+        if (networkView.isMine)
+        {
+            FixedUpdate();
+        }
+        else
+        {
+            SyncedMovement();
+        }
+    }
+    private void SyncedMovement()
+    {
+        syncTime += Time.deltaTime;
+        rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
     }
 }
