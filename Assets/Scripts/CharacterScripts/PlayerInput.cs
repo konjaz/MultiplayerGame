@@ -47,5 +47,8 @@ public class PlayerInput : MonoBehaviour {
         //MousePosition;
         
 	}
-    
+    internal void active()
+    {
+        throw new System.NotImplementedException();
+    }
 }

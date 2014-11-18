@@ -12,7 +12,7 @@ Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\Assembly-CSharp.
 Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\Photon3Unity3D.dll (this message is harmless)
 Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.085 seconds
+- Completed reload, in  0.068 seconds
 desktop: 1366x768 60Hz; virtual: 2646x1024 at -1280,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -22,14 +22,7 @@ Server Initialized
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-NullReferenceException
-  at (wrapper managed-to-native) UnityEngine.Network:INTERNAL_CALL_Instantiate (UnityEngine.Object,UnityEngine.Vector3&,UnityEngine.Quaternion&,int)
-  at UnityEngine.Network.Instantiate (UnityEngine.Object prefab, Vector3 position, Quaternion rotation, Int32 group) [0x00000] in <filename unknown>:0 
-  at NetworkManager.SpawnPlayer () [0x00000] in <filename unknown>:0 
-  at NetworkManager.OnServerInitialized () [0x00000] in <filename unknown>:0 
-UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
-NetworkManager:StartServer()
-NetworkManager:OnGUI()
+Disconnectiong: 192.168.1.149:60264
  
-(Filename:  Line: -1)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
