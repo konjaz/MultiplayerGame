@@ -38,7 +38,11 @@ public class NetworkManager : MonoBehaviour
     }
     private void SpawnPlayer()
     {
-        Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+        GameObject player = Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0) as GameObject;
+        if (player.networkView.isMine) 
+        {
+            player.transform.FindChild("Main Camera").gameObject.SetActive(true);
+        }
     }
     private void RefreshHostList()
     {

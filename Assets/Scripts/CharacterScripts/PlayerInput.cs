@@ -8,7 +8,6 @@ public class PlayerInput : MonoBehaviour {
 
     public bool MouseTargetingActive = true;
     void Awake() {
-        cam = Camera.main;
         if (!charSystem) 
         {
             if (!(charSystem = GetComponent<CharacterSystem>())) 
@@ -17,31 +16,36 @@ public class PlayerInput : MonoBehaviour {
             }
         }
 	}
-
+    void Start() 
+    {
+        cam = Camera.main;
+    }
     Ray mousePositionRay;
     RaycastHit mousePositionRaycastHit;
-	void FixedUpdate () {
-
-        float verticalMovement = Input.GetAxis("Vertical");
-        float horizontalMovement = Input.GetAxis("Horizontal"); // unused
-        charSystem.Move(verticalMovement,horizontalMovement);
-
-        if (Input.GetButton("Jump")) 
+	void Update () {
+        if (networkView.isMine)
         {
-            charSystem.Jump();
-        }
-        if (Input.GetButton("Fire"))
-        {
-            charSystem.Shoot();
-            //charSystem.Jump();
-        }
+            float verticalMovement = Input.GetAxis("Vertical");
+            float horizontalMovement = Input.GetAxis("Horizontal"); // unused
+            charSystem.Move(verticalMovement, horizontalMovement);
 
-        if (MouseTargetingActive)
-        {
-            mousePositionRay = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(mousePositionRay, out mousePositionRaycastHit, 100f))
+            if (Input.GetButton("Jump"))
             {
-                charSystem.TargetWeaponAt(mousePositionRaycastHit.point);
+                charSystem.Jump();
+            }
+            if (Input.GetButton("Fire"))
+            {
+                charSystem.Shoot();
+                //charSystem.Jump();
+            }
+
+            if (MouseTargetingActive)
+            {
+                mousePositionRay = cam.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(mousePositionRay, out mousePositionRaycastHit, 100f))
+                {
+                    charSystem.TargetWeaponAt(mousePositionRaycastHit.point);
+                }
             }
         }
         //MousePosition;

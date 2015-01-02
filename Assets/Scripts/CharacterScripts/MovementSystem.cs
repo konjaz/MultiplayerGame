@@ -22,8 +22,9 @@ public class MovementSystem : MonoBehaviour
         charRigidbody = rigidbody;
     }
 	
-	void FixedUpdate () 
+	void Update () 
     {
+        
         OnGroundTest();
 
         rigidbody.AddForce(new Vector3(0, -gravity * rigidbody.mass, 0));
