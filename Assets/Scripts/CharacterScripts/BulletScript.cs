@@ -63,6 +63,7 @@ public class BulletScript : MonoBehaviour {
 
     public void DeactivateBullet() 
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+        //gameObject.SetActive(false);
     }
 }
