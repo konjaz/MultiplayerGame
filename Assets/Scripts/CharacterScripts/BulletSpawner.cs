@@ -39,7 +39,7 @@ public class BulletSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start () {
         staticBulletPrefab = bulletPrefab.gameObject;
-        bulletPool();
+        //bulletPool();
 	}
 	
 	// Update is called once per frame

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
+public class PlayerInput : Photon.MonoBehaviour
+{
     public CharacterSystem charSystem;
 
     Camera cam;
@@ -23,7 +24,7 @@ public class PlayerInput : MonoBehaviour {
     Ray mousePositionRay;
     RaycastHit mousePositionRaycastHit;
 	void Update () {
-        if (networkView.isMine)
+        if (photonView.isMine)
         {
             float verticalMovement = Input.GetAxis("Vertical");
             float horizontalMovement = Input.GetAxis("Horizontal"); // unused
@@ -48,11 +49,52 @@ public class PlayerInput : MonoBehaviour {
                 }
             }
         }
+        //else 
+        //{
+        //    SyncedMovement();
+        //}
         //MousePosition;
-        
 	}
-    internal void active()
+
+    //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.isWriting)
+    //        stream.SendNext(rigidbody.position);
+    //    else
+    //        rigidbody.position = (Vector3)stream.ReceiveNext();
+    //}
+    #region Networking
+    private float lastSynchronizationTime = 0f;
+    private float syncDelay = 0f;
+    private float syncTime = 0f;
+    private Vector3 syncStartPosition = Vector3.zero;
+    private Vector3 syncEndPosition = Vector3.zero;
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if (stream.isWriting)
+        {
+            stream.SendNext(rigidbody.position);
+        }
+        else
+        {
+            rigidbody.position = (Vector3)stream.ReceiveNext();
+            //syncEndPosition = (Vector3)stream.ReceiveNext();
+            //syncStartPosition = rigidbody.position;
+
+            //syncTime = 0f;
+            //syncDelay = Time.time - lastSynchronizationTime;
+            //lastSynchronizationTime = Time.time;
+        }
     }
+
+    //private void SyncedMovement()
+    //{
+    //    syncTime += Time.deltaTime;
+    //    rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+    //}
+    #endregion
+    //internal void active()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
 }

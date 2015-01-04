@@ -15,7 +15,7 @@ public class BattleSystem : MonoBehaviour {
     public BulletScript GetBullet()
     {
         shootTimer = Time.time + spaceInBetweenShoots;
-        return (Network.Instantiate(BulletSpawner.staticBulletPrefab,Vector3.zero,Quaternion.identity, 0) as GameObject).GetComponent<BulletScript>();
+        return (PhotonNetwork.Instantiate(BulletSpawner.staticBulletPrefab.name, Vector3.zero, Quaternion.identity, 0) as GameObject).GetComponent<BulletScript>();
     }
     public bool CanIShoot() 
     {
