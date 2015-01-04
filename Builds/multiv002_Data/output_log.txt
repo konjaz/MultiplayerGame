@@ -1,4 +1,4 @@
-Initialize engine version: 4.5.5f1 (7684ad0c5a44)
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
@@ -10,19 +10,17 @@ Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\UnityEngine.dll 
 Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\Photon3Unity3D.dll (this message is harmless)
 Loading D:\MultiPlayer\Builds\multiv002_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.068 seconds
+- Completed reload, in  0.074 seconds
 desktop: 1366x768 60Hz; virtual: 2646x1024 at -1280,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: D:\MultiPlayer\Builds\multiv002_Data\Managed\System.dll (this message is harmless)
 Server Initialized
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Disconnectiong: 192.168.1.149:60264
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
