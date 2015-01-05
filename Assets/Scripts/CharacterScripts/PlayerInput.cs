@@ -60,15 +60,7 @@ public class PlayerInput : Photon.MonoBehaviour
             }
         }
     }
-
-    //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.isWriting)
-    //        stream.SendNext(rigidbody.position);
-    //    else
-    //        rigidbody.position = (Vector3)stream.ReceiveNext();
-    //}
-    #region Networking
+    #region Syncing PlayerCharacters
     private float lastSynchronizationTime = 0f;
     private float syncDelay = 1f;
     private float syncTime = 0f;
@@ -76,7 +68,6 @@ public class PlayerInput : Photon.MonoBehaviour
     private Vector3 syncEndPosition = Vector3.zero;
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        Debug.Log("OnPhotonSerializeView");
         if (stream.isWriting)
         {
             stream.SendNext(rigidbody.position);
@@ -90,20 +81,23 @@ public class PlayerInput : Photon.MonoBehaviour
             syncTime = 0f;
             syncDelay = Time.time - lastSynchronizationTime;
             lastSynchronizationTime = Time.time;
-            Debug.Log("syncEndPosition" + syncEndPosition + " \n" + syncStartPosition + "\n time " + (syncTime / syncDelay));
         }
     }
 
     private void SyncedMovement()
     {
         syncTime += Time.deltaTime;
-        rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
-        //Debug.Log("syncEndPosition" + syncEndPosition + " \n" + syncStartPosition + "\n time " + (syncTime / syncDelay));
-    
+        Vector3 vec = syncEndPosition - rigidbody.position;
+        charSystem.SetSpeed(vec.x);
+        if (vec.sqrMagnitude < 4)
+        {
+            rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+        }
+        else 
+        {
+            rigidbody.position = syncEndPosition;
+        }
+        
     }
     #endregion
-    //internal void active()
-    //{
-    //    throw new System.NotImplementedException();
-    //}
 }

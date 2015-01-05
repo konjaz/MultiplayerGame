@@ -24,19 +24,8 @@ public class MovementSystem : MonoBehaviour
 	
 	void Update () 
     {
-        
         OnGroundTest();
-
         rigidbody.AddForce(new Vector3(0, -gravity * rigidbody.mass, 0));
-        //if (IsOnGround()) 
-        //{
-            
-        //    // Jump
-        //    if (canJump && Input.GetButton("Jump"))
-        //    {
-        //        //rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
-        //    }
-        //}
 	}
     #region OnGroundTest
     private bool onGround = false;
@@ -47,8 +36,8 @@ public class MovementSystem : MonoBehaviour
     
     public void OnGroundTest()
     {
-        float x_offset = collider.bounds.size.x / 2; // mozna wtawic jako parametr;
-        float rayLenght = collider.bounds.size.y/2; // mozna wtawic jako parametr;
+        float x_offset = collider.bounds.size.x / 2; // mozna wstawic jako parametr;
+        float rayLenght = collider.bounds.size.y/2; // mozna wstawic jako parametr;
         onGroundRayTest1 = new Ray(new Vector3(charRigidbody.position.x + x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
         onGroundRayTest2 = new Ray(new Vector3(charRigidbody.position.x - x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
         onGround = false;
