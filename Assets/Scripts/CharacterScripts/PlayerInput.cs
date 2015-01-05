@@ -26,35 +26,40 @@ public class PlayerInput : Photon.MonoBehaviour
 	void Update () {
         if (photonView.isMine)
         {
-            float verticalMovement = Input.GetAxis("Vertical");
-            float horizontalMovement = Input.GetAxis("Horizontal"); // unused
-            charSystem.Move(verticalMovement, horizontalMovement);
-
-            if (Input.GetButton("Jump"))
-            {
-                charSystem.Jump();
-            }
-            if (Input.GetButton("Fire"))
-            {
-                charSystem.Shoot();
-                //charSystem.Jump();
-            }
-
-            if (MouseTargetingActive)
-            {
-                mousePositionRay = cam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(mousePositionRay, out mousePositionRaycastHit, 100f))
-                {
-                    charSystem.TargetWeaponAt(mousePositionRaycastHit.point);
-                }
-            }
+            PlayerInputs();
         }
-        //else 
-        //{
-        //    SyncedMovement();
-        //}
+        else
+        {
+            SyncedMovement();
+        }
         //MousePosition;
 	}
+
+    private void PlayerInputs()
+    {
+        float verticalMovement = Input.GetAxis("Vertical");
+        float horizontalMovement = Input.GetAxis("Horizontal"); // unused
+        charSystem.Move(verticalMovement, horizontalMovement);
+
+        if (Input.GetButton("Jump"))
+        {
+            charSystem.Jump();
+        }
+        if (Input.GetButton("Fire"))
+        {
+            charSystem.Shoot();
+            //charSystem.Jump();
+        }
+
+        if (MouseTargetingActive)
+        {
+            mousePositionRay = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(mousePositionRay, out mousePositionRaycastHit, 100f))
+            {
+                charSystem.TargetWeaponAt(mousePositionRaycastHit.point);
+            }
+        }
+    }
 
     //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     //{
@@ -65,33 +70,37 @@ public class PlayerInput : Photon.MonoBehaviour
     //}
     #region Networking
     private float lastSynchronizationTime = 0f;
-    private float syncDelay = 0f;
+    private float syncDelay = 1f;
     private float syncTime = 0f;
     private Vector3 syncStartPosition = Vector3.zero;
     private Vector3 syncEndPosition = Vector3.zero;
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        Debug.Log("OnPhotonSerializeView");
         if (stream.isWriting)
         {
             stream.SendNext(rigidbody.position);
         }
         else
         {
-            rigidbody.position = (Vector3)stream.ReceiveNext();
-            //syncEndPosition = (Vector3)stream.ReceiveNext();
-            //syncStartPosition = rigidbody.position;
+            //rigidbody.position = (Vector3)stream.ReceiveNext();
+            syncEndPosition = (Vector3)stream.ReceiveNext();
+            syncStartPosition = rigidbody.position;
 
-            //syncTime = 0f;
-            //syncDelay = Time.time - lastSynchronizationTime;
-            //lastSynchronizationTime = Time.time;
+            syncTime = 0f;
+            syncDelay = Time.time - lastSynchronizationTime;
+            lastSynchronizationTime = Time.time;
+            Debug.Log("syncEndPosition" + syncEndPosition + " \n" + syncStartPosition + "\n time " + (syncTime / syncDelay));
         }
     }
 
-    //private void SyncedMovement()
-    //{
-    //    syncTime += Time.deltaTime;
-    //    rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
-    //}
+    private void SyncedMovement()
+    {
+        syncTime += Time.deltaTime;
+        rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+        //Debug.Log("syncEndPosition" + syncEndPosition + " \n" + syncStartPosition + "\n time " + (syncTime / syncDelay));
+    
+    }
     #endregion
     //internal void active()
     //{

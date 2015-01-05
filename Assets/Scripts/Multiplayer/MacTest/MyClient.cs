@@ -5,7 +5,11 @@ public class MyClient : MonoBehaviour {
     private const string roomName = "RoomName";
     private RoomInfo[] roomsList;
     public GameObject playerPrefab;
-	// Use this for initialization
+    PhotonView photonView;
+    void Awake() 
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 	void Start () {
         PhotonNetwork.ConnectUsingSettings("0.1");
 	}
@@ -33,7 +37,10 @@ public class MyClient : MonoBehaviour {
             }
         }
     }
-
+    //void OnJoinedLobby()
+    //{
+    //    PhotonNetwork.JoinRandomRoom();
+    //}
     void OnReceivedRoomListUpdate()
     {
         roomsList = PhotonNetwork.GetRoomList();
@@ -44,5 +51,9 @@ public class MyClient : MonoBehaviour {
         newPlayer.transform.FindChild("Main Camera").gameObject.SetActive(true);
         newPlayer.rigidbody.isKinematic = false;
         Debug.Log("Connected to Room");
+    }
+    void OnPhotonRandomJoinFailed()
+    {
+        Debug.Log("Can't join random room!");
     }
 }
