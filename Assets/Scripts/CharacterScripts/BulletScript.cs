@@ -51,6 +51,7 @@ public class BulletScript : MonoBehaviour {
                     source.DealDamage(enemyHitted);
                     source.rigidbody.AddForce(direction * rigidbody.mass);
                     DeactivateBullet();
+                    Debug.Log("Hitted :" + enemyHitted.name );
                     //enemyHitted.DecreaseLife();
                 }
                 else 
@@ -63,7 +64,47 @@ public class BulletScript : MonoBehaviour {
 
     public void DeactivateBullet() 
     {
-        Destroy(gameObject);
-        //gameObject.SetActive(false);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+    //#region Syncing PlayerCharacters
+    //private float lastSynchronizationTime = 0f;
+    //private float syncDelay = 1f;
+    //private float syncTime = 0f;
+    //private Vector3 syncStartPosition = Vector3.zero;
+    //private Vector3 syncEndPosition = Vector3.zero;
+    //void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.isWriting)
+    //    {
+    //        stream.SendNext(rigidbody.position);
+    //    }
+    //    else
+    //    {
+    //        //rigidbody.position = (Vector3)stream.ReceiveNext();
+    //        syncEndPosition = (Vector3)stream.ReceiveNext();
+    //        syncStartPosition = rigidbody.position;
+
+    //        syncTime = 0f;
+    //        syncDelay = Time.time - lastSynchronizationTime;
+    //        lastSynchronizationTime = Time.time;
+    //    }
+    //}
+
+    //private void SyncedMovement()
+    //{
+    //    syncTime += Time.deltaTime;
+    //    Vector3 vec = syncEndPosition - rigidbody.position;
+    //    //charSystem.SetSpeed(vec.x);
+    //    if (vec.sqrMagnitude < 4)
+    //    {
+    //        rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+    //    }
+    //    else
+    //    {
+    //        rigidbody.position = syncEndPosition;
+    //    }
+
+    //}
+    //#endregion
 }

@@ -26,7 +26,10 @@ public class PlayerInput : Photon.MonoBehaviour
 	void Update () {
         if (photonView.isMine)
         {
-            PlayerInputs();
+            if (charSystem.IsAlive())
+            {
+                PlayerInputs();
+            }
         }
         else
         {
