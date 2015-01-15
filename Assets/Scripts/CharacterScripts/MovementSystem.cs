@@ -24,9 +24,15 @@ public class MovementSystem : MonoBehaviour
 	
 	void Update () 
     {
+
+        //MovmentUpdate();
+	}
+
+    public void MovmentScriptUpdate()
+    {
         OnGroundTest();
         rigidbody.AddForce(new Vector3(0, -gravity * rigidbody.mass, 0));
-	}
+    }
     #region OnGroundTest
     private bool onGround = false;
     public bool IsOnGround()

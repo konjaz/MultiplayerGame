@@ -74,6 +74,7 @@ public class CharacterSystem : Photon.MonoBehaviour
     {
 //TODO!!
         //DeathAnimaion();
+        rigidbody.isKinematic = true;
         SetAlive(false);
         collider.enabled = false;
         //isAlive = false;
@@ -87,6 +88,7 @@ public class CharacterSystem : Photon.MonoBehaviour
         //ActivateAllSubScripts();
         //DisableDeathBool();
         //isAlive = true;
+        rigidbody.isKinematic = false;
         collider.enabled = true;
         SetAlive(true);
         hitpointsLeft = maxhitpoints;
@@ -103,7 +105,13 @@ public class CharacterSystem : Photon.MonoBehaviour
         }
         //animator = GetComponentInChildren<Animator>();
 	}
-    
+    void Update()
+    {
+        if (IsAlive())
+        {
+            moveSystem.MovmentScriptUpdate();
+        }
+    }
 
     #region AnimationSystem
     public static int speedFloat = Animator.StringToHash("speed");
@@ -119,9 +127,9 @@ public class CharacterSystem : Photon.MonoBehaviour
     #endregion
     #region Combat
     [RPC]
-    public void OnAwakeRPC(byte myParameter)
+    public void TellOthersIShoot(byte myParameter)
     {
-        Debug.Log("RPC: 'OnAwakeRPC' Parameter: " + myParameter + " PhotonView: " + this.photonView);
+        //Debug.Log("RPC: 'OnAwakeRPC' Parameter: " + myParameter + " PhotonView: " + this.photonView);
         BulletScript bullet = battleSystem.GetBullet();
         bullet.BulletSetUP(this, battleSystem.GetBulletSpawningPoint(), battleSystem.GetBulletsDirection(), battleSystem.GetForce());
     }
@@ -140,7 +148,7 @@ public class CharacterSystem : Photon.MonoBehaviour
     {
         if (battleSystem.CanIShoot())
         {
-            photonView.RPC("OnAwakeRPC", PhotonTargets.Others, (byte)1);
+            photonView.RPC("TellOthersIShoot", PhotonTargets.Others, (byte)1);
             BulletScript bullet = battleSystem.GetBullet();
             bullet.BulletSetUP(this, battleSystem.GetBulletSpawningPoint(), battleSystem.GetBulletsDirection(), battleSystem.GetForce());
         }
