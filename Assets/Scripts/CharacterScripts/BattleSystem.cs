@@ -10,8 +10,9 @@ public class BattleSystem : MonoBehaviour {
     public float damageModifier = 1;
     public float bulletStartingForce = 20;
     public float spaceInBetweenShoots = 1f;
+    //public float ammo = 30;
+    //float clipsize = 30;
     float shootTimer;
-
     public BulletScript GetBullet()
     {
         shootTimer = Time.time + spaceInBetweenShoots;
