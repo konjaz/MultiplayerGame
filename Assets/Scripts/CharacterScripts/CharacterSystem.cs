@@ -14,6 +14,8 @@ public class CharacterSystem : Photon.MonoBehaviour
     public Transform Graphic_HealthBar;
     //bool isAlive = true;
     public CharacterAligment charAliment = CharacterAligment.Enemy;
+    Vector3 spawnPosition;
+    float respawnTimer = 0;
     #region Getters Setters
     public float GetHitpointsLeft() 
     {
@@ -77,6 +79,7 @@ public class CharacterSystem : Photon.MonoBehaviour
         rigidbody.isKinematic = true;
         SetAlive(false);
         collider.enabled = false;
+        respawnTimer = Time.time + 3;
         //isAlive = false;
         //DeactivateAllSubScripts();
         //throw new System.NotImplementedException();
@@ -88,10 +91,12 @@ public class CharacterSystem : Photon.MonoBehaviour
         //ActivateAllSubScripts();
         //DisableDeathBool();
         //isAlive = true;
+        transform.position = spawnPosition;
         rigidbody.isKinematic = false;
         collider.enabled = true;
         SetAlive(true);
         hitpointsLeft = maxhitpoints;
+        Graphic_HealthBar.localScale = new Vector3(CurrentToMaxHealthRatio(), Graphic_HealthBar.localScale.y, Graphic_HealthBar.localScale.y);
     }
     #endregion
     void Awake() {
@@ -103,6 +108,7 @@ public class CharacterSystem : Photon.MonoBehaviour
         {
             Debug.LogError("Blad <CharacterSystem>: Brak BattleSystem");
         }
+        spawnPosition = transform.position;
         //animator = GetComponentInChildren<Animator>();
 	}
     void Update()
@@ -110,6 +116,13 @@ public class CharacterSystem : Photon.MonoBehaviour
         if (IsAlive())
         {
             moveSystem.MovmentScriptUpdate();
+        }
+        else 
+        {
+            if (respawnTimer <= Time.time) 
+            {
+                RestorePlayer();
+            }
         }
     }
 
