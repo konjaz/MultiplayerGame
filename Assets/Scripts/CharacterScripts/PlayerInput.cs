@@ -98,6 +98,7 @@ public class PlayerInput : Photon.MonoBehaviour
         }
         else 
         {
+            syncStartPosition = syncEndPosition;
             rigidbody.position = syncEndPosition;
         }
         

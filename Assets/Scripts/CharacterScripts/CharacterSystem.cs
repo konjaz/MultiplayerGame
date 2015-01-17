@@ -84,8 +84,8 @@ public class CharacterSystem : Photon.MonoBehaviour
         //DeactivateAllSubScripts();
         //throw new System.NotImplementedException();
     }
-
-    public void RestorePlayer()
+    [RPC]
+    public void RestorePlayer(byte myParameter)
     {
 //TODO
         //ActivateAllSubScripts();
@@ -111,6 +111,10 @@ public class CharacterSystem : Photon.MonoBehaviour
         spawnPosition = transform.position;
         //animator = GetComponentInChildren<Animator>();
 	}
+    void Start() 
+    {
+        SetName();
+    }
     void Update()
     {
         if (IsAlive())
@@ -119,9 +123,10 @@ public class CharacterSystem : Photon.MonoBehaviour
         }
         else 
         {
-            if (respawnTimer <= Time.time) 
+            if (respawnTimer <= Time.time)
             {
-                RestorePlayer();
+                photonView.RPC("RestorePlayer", PhotonTargets.All, (byte)3);
+                //RestorePlayer();
             }
         }
     }
@@ -137,6 +142,13 @@ public class CharacterSystem : Photon.MonoBehaviour
     {
         animator.SetBool(aliveBool,value);
     }
+    [RPC]
+    public void ChangeMyName(byte myParameter)
+    {
+        //newPlayer.name = ;
+        name = "Player " + photonView.ownerId;
+        transform.GetComponentInChildren<TextMesh>().text = name;
+    }
     #endregion
     #region Combat
     [RPC]
@@ -146,6 +158,7 @@ public class CharacterSystem : Photon.MonoBehaviour
         BulletScript bullet = battleSystem.GetBullet();
         bullet.BulletSetUP(this, battleSystem.GetBulletSpawningPoint(), battleSystem.GetBulletsDirection(), battleSystem.GetForce());
     }
+
     public void TargetWeaponAt(Vector3 target) 
     {
         battleSystem.TargetWeaponAtPoint(target);
@@ -155,7 +168,15 @@ public class CharacterSystem : Photon.MonoBehaviour
         if (enemy.charAliment != CharacterAligment.Friendly)
         { 
             battleSystem.DealDamage(enemy);
+            if (enemy.CurrentToMaxHealthRatio() <= 0) 
+            {
+                photonView.owner.AddScore(1);
+            }
         }
+    }
+    public void SetName()
+    {
+        photonView.RPC("ChangeMyName", PhotonTargets.All, (byte)2);
     }
     public void Shoot()
     {
@@ -191,6 +212,18 @@ public class CharacterSystem : Photon.MonoBehaviour
         {
             SetHitPoints((float)stream.ReceiveNext());
             
+        }
+    }
+    void OnGUI() 
+    {
+        if (PhotonNetwork.room != null)
+        {
+            foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            {
+
+                GUI.Box(new Rect(Screen.width / 2 - Screen.width * 0.2f / 2, Screen.height * 0.04f * (player.ID - 1), Screen.width * 0.05f, Screen.height * 0.04f), "P" + player.ID + ": " + player.GetScore());
+            
+            }
         }
     }
 }

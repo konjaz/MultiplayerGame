@@ -11,8 +11,11 @@ public class MyClient : MonoBehaviour {
     public static BulletScript[] bulletsPool;
     public BulletScript[] bulletsPool2;
     PhotonView photonView;
-    void Awake() 
+    public List<CharacterSystem> listOfPlayers; 
+    
+    void Awake()
     {
+        listOfPlayers = new List<CharacterSystem>();
         bulletsPool = bulletsPool2;
         photonView = GetComponent<PhotonView>();
     }
@@ -31,7 +34,7 @@ public class MyClient : MonoBehaviour {
             // Create Room
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
             {
-                PhotonNetwork.CreateRoom(roomName);
+                PhotonNetwork.CreateRoom(roomName + Random.Range(0,99999));
             }
                 //PhotonNetwork.CreateRoom(roomName, true, true, 5);
                 
@@ -54,14 +57,27 @@ public class MyClient : MonoBehaviour {
     {
         roomsList = PhotonNetwork.GetRoomList();
     }
+     
     void OnJoinedRoom()
     {
         GameObject newPlayer = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
-        newPlayer.name = "Player " + photonView.instantiationId;
-        newPlayer.transform.GetComponentInChildren<TextMesh>().text = newPlayer.name;
+        //newPlayer.name = "Player " + photonView.ownerId;
+        //newPlayer.transform.GetComponentInChildren<TextMesh>().text = newPlayer.name;
+        
         newPlayer.transform.FindChild("Main Camera").gameObject.SetActive(true);
         newPlayer.rigidbody.isKinematic = false;
+        //myAvatar = newPlayer.GetComponent<CharacterSystem>();
+        listOfPlayers.Add(newPlayer.GetComponent<CharacterSystem>());
         Debug.Log("Connected to Room");
+        
+    }
+
+    void OnPhotonPlayerConnected(PhotonPlayer newPlayer) 
+    {
+        foreach (CharacterSystem avatar in listOfPlayers)
+        {
+            avatar.SetName();
+        }
     }
     void OnPhotonRandomJoinFailed()
     {

@@ -51,7 +51,7 @@ public class BulletScript : MonoBehaviour {
                     source.DealDamage(enemyHitted);
                     source.rigidbody.AddForce(direction * rigidbody.mass);
                     DeactivateBullet();
-                    Debug.Log("Hitted :" + enemyHitted.name );
+                    //Debug.Log("Hitted :" + enemyHitted.name );
                     //enemyHitted.DecreaseLife();
                 }
                 else 
