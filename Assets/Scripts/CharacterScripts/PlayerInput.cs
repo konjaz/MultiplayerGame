@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerInput : Photon.MonoBehaviour
 {
     public CharacterSystem charSystem;
-
+    bool interpolation = true;
     Camera cam;
 
     public bool MouseTargetingActive = true;
@@ -33,7 +33,14 @@ public class PlayerInput : Photon.MonoBehaviour
         }
         else
         {
-            SyncedMovement();
+            if (Input.GetKeyDown(KeyCode.I) && Input.GetKey(KeyCode.RightControl))
+            {
+                interpolation = !interpolation;
+            }
+            if (interpolation)
+            {
+                SyncedMovement();
+            }
         }
         //MousePosition;
 	}
@@ -77,13 +84,19 @@ public class PlayerInput : Photon.MonoBehaviour
         }
         else
         {
-            //rigidbody.position = (Vector3)stream.ReceiveNext();
-            syncEndPosition = (Vector3)stream.ReceiveNext();
-            syncStartPosition = rigidbody.position;
+            if (interpolation)
+            {
+                syncEndPosition = (Vector3)stream.ReceiveNext();
+                syncStartPosition = rigidbody.position;
 
-            syncTime = 0f;
-            syncDelay = Time.time - lastSynchronizationTime;
-            lastSynchronizationTime = Time.time;
+                syncTime = 0f;
+                syncDelay = Time.time - lastSynchronizationTime;
+                lastSynchronizationTime = Time.time;
+            }
+            else
+            {
+                rigidbody.position = (Vector3)stream.ReceiveNext();
+            }
         }
     }
 
@@ -92,15 +105,15 @@ public class PlayerInput : Photon.MonoBehaviour
         syncTime += Time.deltaTime;
         Vector3 vec = syncEndPosition - rigidbody.position;
         charSystem.SetSpeed(vec.x);
-        if (vec.sqrMagnitude < 4)
-        {
+        //if (vec.sqrMagnitude < 4)
+        //{
             rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
-        }
-        else 
-        {
-            syncStartPosition = syncEndPosition;
-            rigidbody.position = syncEndPosition;
-        }
+        //}
+        //else 
+        //{
+        //    syncStartPosition = syncEndPosition;
+        //    rigidbody.position = syncEndPosition;
+        //}
         
     }
     #endregion

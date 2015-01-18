@@ -117,16 +117,19 @@ public class CharacterSystem : Photon.MonoBehaviour
     }
     void Update()
     {
-        if (IsAlive())
+        if (photonView.isMine)
         {
-            moveSystem.MovmentScriptUpdate();
-        }
-        else 
-        {
-            if (respawnTimer <= Time.time)
+            if (IsAlive())
             {
-                photonView.RPC("RestorePlayer", PhotonTargets.All, (byte)3);
-                //RestorePlayer();
+                moveSystem.MovmentScriptUpdate();
+            }
+            else
+            {
+                if (respawnTimer <= Time.time)
+                {
+                    photonView.RPC("RestorePlayer", PhotonTargets.All, (byte)3);
+                    //RestorePlayer();
+                }
             }
         }
     }

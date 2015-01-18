@@ -15,6 +15,7 @@ public class MyClient : MonoBehaviour {
     
     void Awake()
     {
+        PhotonNetwork.sendRate = 60;
         listOfPlayers = new List<CharacterSystem>();
         bulletsPool = bulletsPool2;
         photonView = GetComponent<PhotonView>();
@@ -47,6 +48,35 @@ public class MyClient : MonoBehaviour {
                         PhotonNetwork.JoinRoom(roomsList[i].name);
                 }
             }
+        }
+        if (PhotonNetwork.room != null) 
+        {
+            //if (GUI.Button(new Rect(100, 50, 100, 30), "Inc SendRate"))
+            //{
+            //    PhotonNetwork.sendRate++;
+            //}
+            GUI.Box(new Rect(100, 50, 100, 30), string.Format("SendRate: {0}", PhotonNetwork.sendRate));
+            if (GUI.Button(new Rect(100, 80, 100, 30), "Dec SendRate"))
+            {
+                if(PhotonNetwork.sendRate>1)
+                {
+                    PhotonNetwork.sendRate--;
+                }
+            }
+            if (GUI.Button(new Rect(100, 110, 100, 30), "Dec SendRate -10"))
+            {
+                if (PhotonNetwork.sendRate > 11)
+                {
+                    PhotonNetwork.sendRate-=10;
+                }
+            }
+            //if (GUI.Button(new Rect(100, 140, 100, 30), "Dec SendRate -30"))
+            //{
+            //    if (PhotonNetwork.sendRate > 31)
+            //    {
+            //        PhotonNetwork.sendRate -= 30;
+            //    }
+            //}
         }
     }
     //void OnJoinedLobby()

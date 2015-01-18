@@ -22,6 +22,7 @@ using UnityEngine;
 /// \ingroup optionalGui
 public class PhotonStatsGui : MonoBehaviour
 {
+    public float logAutoRegisterTimer = 0;
     /// <summary>Shows or hides GUI (does not affect if stats are collected).</summary>
     public bool statsWindowOn = true;
 
@@ -57,6 +58,7 @@ public class PhotonStatsGui : MonoBehaviour
             this.statsWindowOn = !this.statsWindowOn;
             this.statsOn = true;    // enable stats when showing the window
         }
+        
     }
 
     public void OnGUI()
@@ -138,10 +140,13 @@ public class PhotonStatsGui : MonoBehaviour
 
         if (statsToLog)
         {
-            string complete = string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", total, elapsedTime, average, trafficStatsIn, trafficStatsOut, healthStats);
-            Debug.Log(complete);
+            MakeLog(total, elapsedTime, average, trafficStatsIn, trafficStatsOut, healthStats);
         }
-
+        if (PhotonNetwork.room!= null && logAutoRegisterTimer < Time.time)
+        {
+            MakeLog(total, elapsedTime, average, trafficStatsIn, trafficStatsOut, healthStats);
+            logAutoRegisterTimer = Time.time + 60;
+        }
         // if anything was clicked, the height of this window is likely changed. reduce it to be layouted again next frame
         if (GUI.changed)
         {
@@ -149,5 +154,11 @@ public class PhotonStatsGui : MonoBehaviour
         }
 
         GUI.DragWindow();
+    }
+
+    private static void MakeLog(string total, string elapsedTime, string average, string trafficStatsIn, string trafficStatsOut, string healthStats)
+    {
+        string complete = string.Format("Time:{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}", Time.time, total, elapsedTime, average, trafficStatsIn, trafficStatsOut, healthStats);
+        Debug.Log(complete);
     }
 }

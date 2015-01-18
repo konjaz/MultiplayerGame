@@ -42,15 +42,18 @@ public class MovementSystem : MonoBehaviour
     
     public void OnGroundTest()
     {
-        float x_offset = collider.bounds.size.x / 2; // mozna wstawic jako parametr;
-        float rayLenght = collider.bounds.size.y/2; // mozna wstawic jako parametr;
-        onGroundRayTest1 = new Ray(new Vector3(charRigidbody.position.x + x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
-        onGroundRayTest2 = new Ray(new Vector3(charRigidbody.position.x - x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
-        onGround = false;
-        //if (Physics.Raycast(onGroundRayTest1, out onGroundRayHitTest1, rayLenght) || Physics.Raycast(onGroundRayTest2, out onGroundRayHitTest2, rayLenght))
-        if (Physics.Raycast(onGroundRayTest1, rayLenght) || Physics.Raycast(onGroundRayTest2, rayLenght))
+        if (collider.enabled == true)
         {
-            onGround = true;
+            float x_offset = collider.bounds.size.x / 2; // mozna wstawic jako parametr;
+            float rayLenght = collider.bounds.size.y / 2; // mozna wstawic jako parametr;
+            onGroundRayTest1 = new Ray(new Vector3(charRigidbody.position.x + x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
+            onGroundRayTest2 = new Ray(new Vector3(charRigidbody.position.x - x_offset, charRigidbody.position.y, charRigidbody.position.z), Vector3.down);
+            onGround = false;
+            //if (Physics.Raycast(onGroundRayTest1, out onGroundRayHitTest1, rayLenght) || Physics.Raycast(onGroundRayTest2, out onGroundRayHitTest2, rayLenght))
+            if (Physics.Raycast(onGroundRayTest1, rayLenght) || Physics.Raycast(onGroundRayTest2, rayLenght))
+            {
+                onGround = true;
+            }
         }
     }
     #endregion
